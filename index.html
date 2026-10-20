@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Companheiro</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #10131b;
+      color: #f4f4f5;
+    }
+
+    .chat {
+      position: fixed;
+      left: 20px;
+      top: 20px;
+      bottom: 20px;
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      background: #1b202b;
+      border: 1px solid #343d4d;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .header {
+      padding: 18px;
+      background: #242c39;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .messages {
+      flex: 1;
+      padding: 14px;
+      overflow-y: auto;
+    }
+
+    .message {
+      background: #293445;
+      padding: 12px;
+      margin-bottom: 12px;
+      border-radius: 12px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .user {
+      background: #285444;
+    }
+
+    .input-area {
+      display: flex;
+      padding: 10px;
+      gap: 8px;
+    }
+
+    input {
+      min-width: 0;
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #465163;
+      border-radius: 10px;
+      background: #10131b;
+      color: white;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 11px;
+      background: #397b62;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #489775;
+    }
+
+    .stage {
+      min-height: 100vh;
+      margin-left: 340px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .cat {
+      border: 0;
+      background: transparent;
+      font-size: 120px;
+      cursor: pointer;
+      image-rendering: pixelated;
+      filter: drop-shadow(0 0 20px #4ade8060);
+      transition: transform 0.2s;
+    }
+
+    .cat:hover {
+      transform: scale(1.08);
+    }
+
+    .cat:active {
+      transform: scale(0.92);
+    }
+
+    h1 {
+      color: #86efac;
+    }
+
+    .subtitle {
+      color: #b8c2d2;
+      max-width: 380px;
+      line-height: 1.6;
+    }
+
+    .exit {
+      background: #424958;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 650px) {
+      .chat {
+        left: 10px;
+        right: 10px;
+        top: auto;
+        bottom: 10px;
+        width: auto;
+        height: 42vh;
+      }
+
+      .stage {
+        margin-left: 0;
+        padding: 20px 12px 45vh;
+      }
+
+      .cat {
+        font-size: 90px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <aside class="chat" id="chat">
+    <div class="header">
+      <strong>🐈‍⬛ Companheiro</strong>
+      <button class="exit" onclick="closeChat()">
+        Sair
+      </button>
+    </div>
+
+    <div class="messages" id="messages" aria-live="polite">
+      <div class="message">
+        Oi! 💚 Estou aqui para te ouvir.
+        Como você está se sentindo hoje?
+      </div>
+    </div>
+
+    <form class="input-area" id="chatForm">
+      <input
+        id="userInput"
+        placeholder="Pode falar comigo..."
+        aria-label="Sua mensagem"
+        maxlength="500"
+        autocomplete="off"
+        required
+      >
+      <button type="submit">Enviar</button>
+    </form>
+  </aside>
+
+  <main class="stage">
+    <button
+      class="cat"
+      id="cat"
+      aria-label="Fazer carinho no gato"
+      title="Faça carinho em mim!"
+    >🐈‍⬛</button>
+
+    <h1>Estou aqui com você 💚</h1>
+
+    <p class="subtitle" id="subtitle">
+      Você não precisa resolver tudo de uma vez.
+      Podemos conversar um pouquinho.
+    </p>
+
+    <button id="backButton" class="hidden">
+      Voltar para a conversa
+    </button>
+  </main>
+
+  <script>
+    const chat = document.getElementById("chat");
+    const messages = document.getElementById("messages");
+    const form = document.getElementById("chatForm");
+    const input = document.getElementById("userInput");
+    const cat = document.getElementById("cat");
+    const backButton = document.getElementById("backButton");
+    const subtitle = document.getElementById("subtitle");
+
+    function closeChat() {
+      chat.classList.add("hidden");
+      backButton.classList.remove("hidden");
+    }
+
+    backButton.addEventListener("click", () => {
+      chat.classList.remove("hidden");
+      backButton.classList.add("hidden");
+    });
+
+    function addMessage(text, type = "") {
+      const message = document.createElement("div");
+      message.className = "message " + type;
+      message.textContent = text;
+      messages.appendChild(message);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function getReply(text) {
+      const words = text.toLowerCase();
+
+      if (/matemática|tarefa|dever|lição|cálculo/.test(words)) {
+        return "Eu fui criado para conversar e oferecer apoio emocional 💚 Não consigo ajudar com tarefas, mas podemos conversar sobre como você está se sentindo.";
+      }
+
+      if (/triste|sozinh|solidão|chorando|mal/.test(words)) {
+        return "Sinto muito que esteja sendo difícil. Você não precisa fingir que está tudo bem comigo. Quer me contar um pouquinho sobre o que está sentindo? 💚";
+      }
+
+      if (/ansios|medo|nervos|preocup/.test(words)) {
+        return "Parece que você está passando por um momento complicado. Vamos com calma, um momento de cada vez. O que está te preocupando?";
+      }
+
+      if (/raiva|ódio|irritad/.test(words)) {
+        return "Você pode falar sobre o que está te incomodando sem medo de julgamento. Seus sentimentos merecem ser ouvidos.";
+      }
+
+      if (/feliz|alegre|consegui|vitória/.test(words)) {
+        return "Que bom saber disso! 💚 Quero comemorar esse momento com você. Até as pequenas conquistas merecem espaço.";
+      }
+
+      return "Estou aqui para te ouvir, sem julgamentos. Não tenho todas as respostas, mas podemos tentar entender seus sentimentos juntos. 💚";
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const text = input.value.trim();
+      if (!text) return;
+
+      addMessage(text, "user");
+      input.value = "";
+
+      addMessage(getReply(text));
+    });
+
+    cat.addEventListener("click", () => {
+      subtitle.textContent = "Purrrr... 💚 Obrigado pelo carinho!";
+
+      // Pequeno efeito sonoro sintético, sem arquivo externo.
+      try {
+        const AudioContextClass =
+          window.AudioContext || window.webkitAudioContext;
+
+        if (!AudioContextClass) return;
+
+        const audio = new AudioContextClass();
+        const oscillator = audio.createOscillator();
+        const volume = audio.createGain();
+
+        oscillator.type = "triangle";
+        oscillator.frequency.setValueAtTime(32, audio.currentTime);
+        oscillator.frequency.linearRampToValueAtTime(
+          48, audio.currentTime + 0.18
+        );
+        oscillator.frequency.linearRampToValueAtTime(
+          30, audio.currentTime + 0.5
+        );
+
+        volume.gain.setValueAtTime(0.001, audio.currentTime);
+        volume.gain.linearRampToValueAtTime(
+          0.07, audio.currentTime + 0.08
+        );
+        volume.gain.linearRampToValueAtTime(
+          0.001, audio.currentTime + 0.55
+        );
+
+        oscillator.connect(volume);
+        volume.connect(audio.destination);
+
+        oscillator.start();
+        oscillator.stop(audio.currentTime + 0.56);
+        oscillator.onended = () => audio.close();
+      } catch (error) {
+        console.log("Som indisponível neste navegador.");
+      }
+    });
+  </script>
+
+</body>
+</html>
