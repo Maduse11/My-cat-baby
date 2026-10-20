@@ -2,318 +2,402 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meu Companheiro</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meu Companheiro 🐈‍⬛</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #10131b;
-      color: #f4f4f5;
-    }
+body {
+  margin: 0;
+  background: #101321;
+  color: #f1f5f9;
+  font-family: Arial, sans-serif;
+}
 
-    .chat {
-      position: fixed;
-      left: 20px;
-      top: 20px;
-      bottom: 20px;
-      width: 300px;
-      display: flex;
-      flex-direction: column;
-      background: #1b202b;
-      border: 1px solid #343d4d;
-      border-radius: 16px;
-      overflow: hidden;
-    }
+.chat {
+  position: fixed;
+  top: 18px;
+  bottom: 18px;
+  left: 18px;
+  width: 310px;
+  display: flex;
+  flex-direction: column;
+  background: #141827;
+  border: 1px solid #343b55;
+  border-radius: 16px;
+  overflow: hidden;
+  z-index: 2;
+}
 
-    .header {
-      padding: 18px;
-      background: #242c39;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+.header {
+  padding: 16px;
+  background: #1b2133;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    .messages {
-      flex: 1;
-      padding: 14px;
-      overflow-y: auto;
-    }
+.header small {
+  display: block;
+  color: #9ca3af;
+  margin-top: 5px;
+}
 
-    .message {
-      background: #293445;
-      padding: 12px;
-      margin-bottom: 12px;
-      border-radius: 12px;
-      line-height: 1.5;
-      overflow-wrap: anywhere;
-    }
+button, input { font: inherit; }
 
-    .user {
-      background: #285444;
-    }
+button {
+  cursor: pointer;
+  border: 1px solid #414b68;
+  background: #222a40;
+  color: white;
+  border-radius: 10px;
+  padding: 10px 13px;
+}
 
-    .input-area {
-      display: flex;
-      padding: 10px;
-      gap: 8px;
-    }
+button:hover {
+  border-color: #65e6a5;
+}
 
-    input {
-      min-width: 0;
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #465163;
-      border-radius: 10px;
-      background: #10131b;
-      color: white;
-    }
+.messages {
+  flex: 1;
+  padding: 14px;
+  overflow-y: auto;
+}
 
-    button {
-      border: 0;
-      border-radius: 10px;
-      padding: 11px;
-      background: #397b62;
-      color: white;
-      cursor: pointer;
-    }
+.message {
+  padding: 12px;
+  border-radius: 12px;
+  background: #252c41;
+  line-height: 1.5;
+  margin-bottom: 12px;
+  overflow-wrap: anywhere;
+}
 
-    button:hover {
-      background: #489775;
-    }
+.user {
+  background: #214c40;
+}
 
-    .stage {
-      min-height: 100vh;
-      margin-left: 340px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 24px;
-      text-align: center;
-    }
+.input-area {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid #30374c;
+}
 
-    .cat {
-      border: 0;
-      background: transparent;
-      font-size: 120px;
-      cursor: pointer;
-      image-rendering: pixelated;
-      filter: drop-shadow(0 0 20px #4ade8060);
-      transition: transform 0.2s;
-    }
+input {
+  min-width: 0;
+  width: 100%;
+  background: #0e1220;
+  color: white;
+  border: 1px solid #414b68;
+  border-radius: 10px;
+  padding: 12px;
+}
 
-    .cat:hover {
-      transform: scale(1.08);
-    }
+.send, .heart {
+  background: #23674e;
+  border-color: #398764;
+}
 
-    .cat:active {
-      transform: scale(0.92);
-    }
+.stage {
+  min-height: 100vh;
+  margin-left: 340px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 40%, #243a3b 0%, #151a2b 48%, #101321 78%);
+}
 
-    h1 {
-      color: #86efac;
-    }
+.eyebrow {
+  color: #91e8b9;
+  letter-spacing: 2px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
 
-    .subtitle {
-      color: #b8c2d2;
-      max-width: 380px;
-      line-height: 1.6;
-    }
+h1 {
+  color: #a2f5c2;
+  margin-bottom: 8px;
+}
 
-    .exit {
-      background: #424958;
-    }
+.subtitle {
+  color: #b8c2d8;
+  max-width: 400px;
+  line-height: 1.7;
+}
 
-    .hidden {
-      display: none;
-    }
+.cat-button {
+  background: transparent;
+  border: 0;
+  padding: 10px;
+}
 
-    @media (max-width: 650px) {
-      .chat {
-        left: 10px;
-        right: 10px;
-        top: auto;
-        bottom: 10px;
-        width: auto;
-        height: 42vh;
-      }
+.cat-button:hover {
+  border-color: transparent;
+}
 
-      .stage {
-        margin-left: 0;
-        padding: 20px 12px 45vh;
-      }
+.cat-art {
+  width: min(260px, 65vw);
+  filter: drop-shadow(0 0 24px #4ade8040);
+  image-rendering: pixelated;
+  animation: float 3s ease-in-out infinite;
+}
 
-      .cat {
-        font-size: 90px;
-      }
-    }
-  </style>
+.cat-art:active {
+  transform: scale(.96);
+}
+
+@keyframes float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -8px; }
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.hidden { display: none !important; }
+
+.footer {
+  color: #8994b3;
+  font-size: 13px;
+  margin-top: 35px;
+}
+
+@media (max-width: 650px) {
+  .stage {
+    margin-left: 0;
+    min-height: 100vh;
+    padding: 25px 12px 45vh;
+  }
+
+  .chat {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    top: auto;
+    width: auto;
+    height: 42vh;
+  }
+
+  .cat-art { width: 170px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cat-art { animation: none; }
+}
+</style>
 </head>
 
 <body>
 
-  <aside class="chat" id="chat">
-    <div class="header">
-      <strong>🐈‍⬛ Companheiro</strong>
-      <button class="exit" onclick="closeChat()">
-        Sair
-      </button>
+<aside class="chat" id="chat">
+  <div class="header">
+    <div>
+      <strong>🐾 Companheiro</strong>
+      <small>Sempre aqui para te ouvir ♡</small>
     </div>
+    <button id="exitButton">Sair</button>
+  </div>
 
-    <div class="messages" id="messages" aria-live="polite">
-      <div class="message">
-        Oi! 💚 Estou aqui para te ouvir.
-        Como você está se sentindo hoje?
-      </div>
+  <div class="messages" id="messages" aria-live="polite">
+    <div class="message">
+      Oi! 💚 Estou aqui para te ouvir.
+      Como você está se sentindo hoje?
     </div>
+  </div>
 
-    <form class="input-area" id="chatForm">
-      <input
-        id="userInput"
-        placeholder="Pode falar comigo..."
-        aria-label="Sua mensagem"
-        maxlength="500"
-        autocomplete="off"
-        required
-      >
-      <button type="submit">Enviar</button>
-    </form>
-  </aside>
+  <form class="input-area" id="chatForm">
+    <input id="userInput"
+      placeholder="Pode falar comigo..."
+      maxlength="500"
+      aria-label="Sua mensagem"
+      required>
+    <button class="send" type="submit">➤</button>
+  </form>
+</aside>
 
-  <main class="stage">
-    <button
-      class="cat"
-      id="cat"
-      aria-label="Fazer carinho no gato"
-      title="Faça carinho em mim!"
-    >🐈‍⬛</button>
+<main class="stage">
+  <p class="eyebrow">Seu cantinho de tranquilidade</p>
 
-    <h1>Estou aqui com você 💚</h1>
+  <button class="cat-button" id="cat"
+    aria-label="Fazer carinho no gato"
+    title="Clique para fazer carinho">
 
-    <p class="subtitle" id="subtitle">
-      Você não precisa resolver tudo de uma vez.
-      Podemos conversar um pouquinho.
-    </p>
+    <svg class="cat-art" viewBox="0 0 16 16"
+      xmlns="http://www.w3.org/2000/svg"
+      shape-rendering="crispEdges"
+      role="img" aria-label="Gato preto de olhos verdes">
 
-    <button id="backButton" class="hidden">
-      Voltar para a conversa
-    </button>
-  </main>
+      <!-- Silhueta pixelada -->
+      <g fill="#080b12">
+        <rect x="3" y="1" width="2" height="1"/>
+        <rect x="2" y="2" width="3" height="3"/>
+        <rect x="11" y="2" width="3" height="3"/>
+        <rect x="4" y="3" width="8" height="1"/>
+        <rect x="3" y="4" width="10" height="1"/>
+        <rect x="2" y="5" width="12" height="5"/>
+        <rect x="3" y="10" width="10" height="3"/>
+        <rect x="4" y="13" width="3" height="1"/>
+        <rect x="9" y="13" width="3" height="1"/>
+        <rect x="12" y="10" width="2" height="1"/>
+        <rect x="13" y="9" width="2" height="2"/>
+        <rect x="14" y="8" width="1" height="2"/>
+      </g>
 
-  <script>
-    const chat = document.getElementById("chat");
-    const messages = document.getElementById("messages");
-    const form = document.getElementById("chatForm");
-    const input = document.getElementById("userInput");
-    const cat = document.getElementById("cat");
-    const backButton = document.getElementById("backButton");
-    const subtitle = document.getElementById("subtitle");
+      <!-- Interior das orelhas -->
+      <g fill="#a56a96">
+        <rect x="3" y="3" width="1" height="1"/>
+        <rect x="12" y="3" width="1" height="1"/>
+      </g>
 
-    function closeChat() {
-      chat.classList.add("hidden");
-      backButton.classList.remove("hidden");
-    }
+      <!-- Olhos de cristal verdes -->
+      <g fill="#39ef93">
+        <rect x="4" y="6" width="3" height="2"/>
+        <rect x="9" y="6" width="3" height="2"/>
+      </g>
+      <g fill="#d2ffe7">
+        <rect x="5" y="6" width="1" height="1"/>
+        <rect x="10" y="6" width="1" height="1"/>
+      </g>
+      <g fill="#102b24">
+        <rect x="5" y="7" width="1" height="1"/>
+        <rect x="10" y="7" width="1" height="1"/>
+      </g>
 
-    backButton.addEventListener("click", () => {
-      chat.classList.remove("hidden");
-      backButton.classList.add("hidden");
-    });
+      <!-- Focinho -->
+      <rect x="7" y="9" width="2" height="1" fill="#b56f91"/>
+      <rect x="6" y="10" width="1" height="1" fill="#68718b"/>
+      <rect x="9" y="10" width="1" height="1" fill="#68718b"/>
 
-    function addMessage(text, type = "") {
-      const message = document.createElement("div");
-      message.className = "message " + type;
-      message.textContent = text;
-      messages.appendChild(message);
-      messages.scrollTop = messages.scrollHeight;
-    }
+      <!-- Coleira verde -->
+      <rect x="4" y="11" width="8" height="1" fill="#2b9d72"/>
+      <rect x="7" y="12" width="2" height="2" fill="#72ffb3"/>
+      <rect x="7" y="12" width="1" height="1" fill="#d2ffe7"/>
+    </svg>
+  </button>
 
-    function getReply(text) {
-      const words = text.toLowerCase();
+  <h1>Estou aqui com você 💚</h1>
 
-      if (/matemática|tarefa|dever|lição|cálculo/.test(words)) {
-        return "Eu fui criado para conversar e oferecer apoio emocional 💚 Não consigo ajudar com tarefas, mas podemos conversar sobre como você está se sentindo.";
-      }
+  <p class="subtitle" id="subtitle">
+    Você não precisa resolver tudo de uma vez.
+    Podemos conversar um pouquinho.
+  </p>
 
-      if (/triste|sozinh|solidão|chorando|mal/.test(words)) {
-        return "Sinto muito que esteja sendo difícil. Você não precisa fingir que está tudo bem comigo. Quer me contar um pouquinho sobre o que está sentindo? 💚";
-      }
+  <div class="actions">
+    <button class="heart" id="petButton">♥ Fazer carinho</button>
+    <button id="backButton" class="hidden">↶ Voltar</button>
+  </div>
 
-      if (/ansios|medo|nervos|preocup/.test(words)) {
-        return "Parece que você está passando por um momento complicado. Vamos com calma, um momento de cada vez. O que está te preocupando?";
-      }
+  <p class="footer">🐾 Você importa. Cuide de si com carinho.</p>
+</main>
 
-      if (/raiva|ódio|irritad/.test(words)) {
-        return "Você pode falar sobre o que está te incomodando sem medo de julgamento. Seus sentimentos merecem ser ouvidos.";
-      }
+<script>
+const chat = document.getElementById("chat");
+const messages = document.getElementById("messages");
+const input = document.getElementById("userInput");
+const form = document.getElementById("chatForm");
+const subtitle = document.getElementById("subtitle");
+const backButton = document.getElementById("backButton");
 
-      if (/feliz|alegre|consegui|vitória/.test(words)) {
-        return "Que bom saber disso! 💚 Quero comemorar esse momento com você. Até as pequenas conquistas merecem espaço.";
-      }
+document.getElementById("exitButton").onclick = () => {
+  chat.classList.add("hidden");
+  backButton.classList.remove("hidden");
+};
 
-      return "Estou aqui para te ouvir, sem julgamentos. Não tenho todas as respostas, mas podemos tentar entender seus sentimentos juntos. 💚";
-    }
+backButton.onclick = () => {
+  chat.classList.remove("hidden");
+  backButton.classList.add("hidden");
+};
 
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
+function addMessage(text, type = "") {
+  const div = document.createElement("div");
+  div.className = "message " + type;
+  div.textContent = text;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
 
-      const text = input.value.trim();
-      if (!text) return;
+function getReply(text) {
+  const t = text.toLowerCase();
 
-      addMessage(text, "user");
-      input.value = "";
+  if (/suic[ií]d|me matar|tirar minha vida|não quero mais viver/.test(t)) {
+    return "Sinto muito que você esteja passando por algo tão difícil. Você merece apoio de verdade, agora. Se estiver em perigo imediato, procure um adulto de confiança ou um serviço de emergência e fique perto de alguém que possa ajudar. No Brasil, o SAMU atende pelo 192. Posso continuar aqui enquanto você procura apoio.";
+  }
 
-      addMessage(getReply(text));
-    });
+  if (/matemática|tarefa|dever|lição|cálculo/.test(t)) {
+    return "Eu sou um companheiro de conversa, então não faço tarefas escolares. 💚 Mas podemos conversar sobre como você está se sentindo.";
+  }
 
-    cat.addEventListener("click", () => {
-      subtitle.textContent = "Purrrr... 💚 Obrigado pelo carinho!";
+  if (/triste|sozinh|solidão|chorando|mal/.test(t)) {
+    return "Sinto muito que esteja sendo difícil. Você não precisa fingir que está tudo bem. Quer me contar um pouquinho sobre o que está sentindo? 💚";
+  }
 
-      // Pequeno efeito sonoro sintético, sem arquivo externo.
-      try {
-        const AudioContextClass =
-          window.AudioContext || window.webkitAudioContext;
+  if (/ansios|medo|nervos|preocup/.test(t)) {
+    return "Vamos com calma, um momento de cada vez. Você não precisa resolver tudo agora. O que está te preocupando?";
+  }
 
-        if (!AudioContextClass) return;
+  if (/raiva|ódio|irritad/.test(t)) {
+    return "Você pode falar sobre o que está te incomodando sem medo de julgamento. Seus sentimentos merecem ser ouvidos.";
+  }
 
-        const audio = new AudioContextClass();
-        const oscillator = audio.createOscillator();
-        const volume = audio.createGain();
+  if (/feliz|alegre|consegui|vitória/.test(t)) {
+    return "Que bom saber disso! 💚 Suas conquistas merecem ser celebradas, inclusive as pequenas.";
+  }
 
-        oscillator.type = "triangle";
-        oscillator.frequency.setValueAtTime(32, audio.currentTime);
-        oscillator.frequency.linearRampToValueAtTime(
-          48, audio.currentTime + 0.18
-        );
-        oscillator.frequency.linearRampToValueAtTime(
-          30, audio.currentTime + 0.5
-        );
+  return "Estou aqui para te ouvir, sem julgamentos. Não tenho todas as respostas, mas podemos tentar entender seus sentimentos juntos. 💚";
+}
 
-        volume.gain.setValueAtTime(0.001, audio.currentTime);
-        volume.gain.linearRampToValueAtTime(
-          0.07, audio.currentTime + 0.08
-        );
-        volume.gain.linearRampToValueAtTime(
-          0.001, audio.currentTime + 0.55
-        );
+form.addEventListener("submit", event => {
+  event.preventDefault();
+  const text = input.value.trim();
+  if (!text) return;
 
-        oscillator.connect(volume);
-        volume.connect(audio.destination);
+  addMessage(text, "user");
+  input.value = "";
+  addMessage(getReply(text));
+});
 
-        oscillator.start();
-        oscillator.stop(audio.currentTime + 0.56);
-        oscillator.onended = () => audio.close();
-      } catch (error) {
-        console.log("Som indisponível neste navegador.");
-      }
-    });
-  </script>
+function petCat() {
+  subtitle.textContent = "Purrrr... 💚 Obrigado pelo carinho!";
+
+  try {
+    const AudioClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioClass) return;
+
+    const audio = new AudioClass();
+    const osc = audio.createOscillator();
+    const gain = audio.createGain();
+
+    osc.type = "triangle";
+    osc.frequency.value = 38;
+    gain.gain.value = 0.04;
+
+    osc.connect(gain);
+    gain.connect(audio.destination);
+    osc.start();
+
+    gain.gain.setTargetAtTime(0.001, audio.currentTime, 0.15);
+    osc.stop(audio.currentTime + 0.6);
+    osc.onended = () => audio.close();
+  } catch (error) {
+    // O carinho continua funcionando mesmo sem som.
+  }
+}
+
+document.getElementById("cat").onclick = petCat;
+document.getElementById("petButton").onclick = petCat;
+</script>
 
 </body>
 </html>
