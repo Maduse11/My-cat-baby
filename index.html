@@ -1,403 +1,206 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Meu Companheiro 🐈‍⬛</title>
-
+<title>Companheiro Pixel 🐈‍⬛</title>
 <style>
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  background: #101321;
-  color: #f1f5f9;
-  font-family: Arial, sans-serif;
-}
-
-.chat {
-  position: fixed;
-  top: 18px;
-  bottom: 18px;
-  left: 18px;
-  width: 310px;
-  display: flex;
-  flex-direction: column;
-  background: #141827;
-  border: 1px solid #343b55;
-  border-radius: 16px;
-  overflow: hidden;
-  z-index: 2;
-}
-
-.header {
-  padding: 16px;
-  background: #1b2133;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.header small {
-  display: block;
-  color: #9ca3af;
-  margin-top: 5px;
-}
-
-button, input { font: inherit; }
-
-button {
-  cursor: pointer;
-  border: 1px solid #414b68;
-  background: #222a40;
-  color: white;
-  border-radius: 10px;
-  padding: 10px 13px;
-}
-
-button:hover {
-  border-color: #65e6a5;
-}
-
-.messages {
-  flex: 1;
-  padding: 14px;
-  overflow-y: auto;
-}
-
-.message {
-  padding: 12px;
-  border-radius: 12px;
-  background: #252c41;
-  line-height: 1.5;
-  margin-bottom: 12px;
-  overflow-wrap: anywhere;
-}
-
-.user {
-  background: #214c40;
-}
-
-.input-area {
-  display: flex;
-  gap: 8px;
-  padding: 12px;
-  border-top: 1px solid #30374c;
-}
-
-input {
-  min-width: 0;
-  width: 100%;
-  background: #0e1220;
-  color: white;
-  border: 1px solid #414b68;
-  border-radius: 10px;
-  padding: 12px;
-}
-
-.send, .heart {
-  background: #23674e;
-  border-color: #398764;
-}
-
-.stage {
-  min-height: 100vh;
-  margin-left: 340px;
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background:
-    radial-gradient(ellipse at 50% 40%, #243a3b 0%, #151a2b 48%, #101321 78%);
-}
-
-.eyebrow {
-  color: #91e8b9;
-  letter-spacing: 2px;
-  font-size: 12px;
-  text-transform: uppercase;
-}
-
-h1 {
-  color: #a2f5c2;
-  margin-bottom: 8px;
-}
-
-.subtitle {
-  color: #b8c2d8;
-  max-width: 400px;
-  line-height: 1.7;
-}
-
-.cat-button {
-  background: transparent;
-  border: 0;
-  padding: 10px;
-}
-
-.cat-button:hover {
-  border-color: transparent;
-}
-
-.cat-art {
-  width: min(260px, 65vw);
-  filter: drop-shadow(0 0 24px #4ade8040);
-  image-rendering: pixelated;
-  animation: float 3s ease-in-out infinite;
-}
-
-.cat-art:active {
-  transform: scale(.96);
-}
-
-@keyframes float {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -8px; }
-}
-
-.actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 18px;
-}
-
-.hidden { display: none !important; }
-
-.footer {
-  color: #8994b3;
-  font-size: 13px;
-  margin-top: 35px;
-}
-
-@media (max-width: 650px) {
-  .stage {
-    margin-left: 0;
-    min-height: 100vh;
-    padding: 25px 12px 45vh;
-  }
-
-  .chat {
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    top: auto;
-    width: auto;
-    height: 42vh;
-  }
-
-  .cat-art { width: 170px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .cat-art { animation: none; }
-}
+:root{--mint:#8fffc0;--mint2:#43d995;--panel:#090d1c;--line:#34365f;--muted:#9ca7d6}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:#f4f5ff;font-family:ui-monospace,"Courier New",monospace;background:#080b1a;overflow-x:hidden}
+.room{position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse at 60% 43%,#1b4850 0,#111a35 42%,#090b1a 78%)}
+.room:before{content:"";position:absolute;inset:0;opacity:.25;background-image:linear-gradient(90deg,transparent 96%,#655b9b 97%),linear-gradient(transparent 96%,#655b9b 97%);background-size:54px 54px}
+.window{position:absolute;right:4%;top:5%;width:19%;height:33%;border:9px solid #28274d;box-shadow:inset 0 0 0 4px #12172f;opacity:.85;background:linear-gradient(180deg,#1b2450,#29395c 65%,#111a31)}
+.window:before,.window:after{content:"";position:absolute;background:#28274d}.window:before{width:8px;height:100%;left:50%}.window:after{height:8px;width:100%;top:50%}
+.plant{position:absolute;left:42%;top:0;color:#235e4a;font-size:70px;opacity:.7}
+.layout{min-height:100vh;display:grid;grid-template-columns:minmax(310px,38%) 1fr;gap:20px;padding:24px;max-width:1600px;margin:auto}
+.chat{height:calc(100vh - 48px);min-height:500px;background:linear-gradient(145deg,#080c19f5,#0a1023f5);border:2px solid #494a7d;border-radius:24px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 16px 55px #0007}
+.chat-head{display:flex;align-items:center;gap:14px;padding:20px;border-bottom:2px solid #292d4b;background:#0d1224}
+.paw{font-size:36px;color:var(--mint);text-shadow:0 0 18px #55ffae66}
+.brand{font-size:clamp(18px,2vw,26px);font-weight:bold;color:var(--mint);letter-spacing:1px}
+.small{display:block;color:var(--muted);font-size:13px;margin-top:7px}
+#exit{margin-left:auto;background:transparent;color:#e5e7ff;border:1px solid #555786;border-radius:12px;padding:10px 13px;cursor:pointer}
+.messages{padding:18px;flex:1;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.bubble{max-width:92%;padding:13px 15px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;border-radius:15px;background:#20253d;color:#f1f2ff;font-family:Arial,sans-serif;font-size:15px}
+.bot-row{display:flex;gap:10px;align-items:flex-start}.avatar{width:34px;height:34px;flex:none;border-radius:50%;display:grid;place-items:center;background:#11152a;border:1px solid #5b5c91;font-size:20px}
+.user-row{display:flex;justify-content:flex-end}.user-bubble{background:#173d3c;border:1px solid #246a5d}
+.typing{color:#9deec1;font-style:italic;font-size:13px;padding:0 8px}
+.composer{display:flex;gap:10px;padding:14px;border-top:2px solid #292d4b}
+input{width:100%;min-width:0;background:#090d1d;color:white;border:2px solid #3d406e;border-radius:13px;padding:15px;font:15px Arial,sans-serif;outline:none}
+input:focus{border-color:var(--mint2)}.send{background:#267c69;border:0;border-radius:13px;color:#fff;font-size:22px;padding:0 18px;cursor:pointer}.send:disabled{opacity:.5;cursor:wait}
+.stage{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:calc(100vh - 48px);padding:20px;position:relative}
+.poster{position:absolute;top:4%;left:4%;border:3px solid #25284c;background:#0b1028b8;padding:14px 20px;color:#a4a5e9;font-size:clamp(14px,1.5vw,22px);line-height:1.5}
+.eyebrow{font-size:12px;letter-spacing:3px;color:var(--mint);text-transform:uppercase}
+h1{font-size:clamp(24px,3vw,40px);color:var(--mint);margin:6px 0;text-shadow:0 0 20px #5dffac55}
+.subtitle{font:17px/1.6 Arial,sans-serif;color:#aab5e2;max-width:550px;margin:8px 0 22px}
+.cat-button{position:relative;background:transparent;border:0;cursor:pointer;padding:0;outline-offset:12px}
+.cat-svg{width:min(340px,36vw);height:auto;overflow:visible;filter:drop-shadow(0 12px 0 #050713) drop-shadow(0 0 25px #5dff9d30)}
+.tail{transform-origin:225px 220px;animation:tail 1.15s ease-in-out infinite alternate}
+@keyframes tail{from{transform:rotate(-12deg)}to{transform:rotate(13deg)}}
+.eye-shut{opacity:0;animation:blink 4.2s infinite}
+@keyframes blink{0%,43%,46%,100%{opacity:0}44%,45%{opacity:1}}
+.eyes-open{animation:eyeopen 4.2s infinite}
+@keyframes eyeopen{0%,43%,46%,100%{opacity:1}44%,45%{opacity:0}}
+.heart-float{position:absolute;left:50%;top:38%;font-size:25px;color:#8effbd;pointer-events:none;animation:heartRise 1.25s ease-out forwards;text-shadow:0 0 14px #62ffb7}
+@keyframes heartRise{0%{transform:translate(-50%,0) scale(.4);opacity:0}20%{opacity:1}100%{transform:translate(calc(-50% + var(--dx)), -145px) rotate(var(--rot)) scale(1.2);opacity:0}}
+.cat-name{font-size:clamp(18px,2.3vw,27px);color:#e2ffec;margin:0 0 10px;text-shadow:0 0 14px #5dffac44}
+.actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+.actions button{background:#10182b;border:2px solid #414775;border-radius:14px;color:#dce2ff;padding:13px 22px;font:16px Arial,sans-serif;cursor:pointer}
+.actions .primary{border-color:#267b67;background:#10362f;color:var(--mint)}
+.actions button:disabled{opacity:.45;cursor:wait}
+.foot{position:absolute;bottom:0;left:0;right:0;color:#777eb9;display:flex;align-items:center;gap:14px;justify-content:center;font-size:13px}
+.foot:before,.foot:after{content:"";height:2px;background:#444778;flex:1;max-width:160px}
+.hidden{display:none!important}
+@media(max-width:850px){.layout{display:flex;flex-direction:column;padding:12px;gap:12px}.stage{order:0;min-height:65vh;padding:70px 8px 30px}.chat{order:1;height:48vh;min-height:340px}.cat-svg{width:min(245px,60vw)}.poster{top:8px;left:8px;padding:7px;font-size:12px}.foot{display:none}.window{width:28%;height:20%;top:2%}.plant{left:65%}.layout{padding-bottom:12px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
 </style>
 </head>
-
 <body>
-
-<aside class="chat" id="chat">
-  <div class="header">
-    <div>
-      <strong>🐾 Companheiro</strong>
-      <small>Sempre aqui para te ouvir ♡</small>
+<div class="room"></div><div class="window"></div><div class="plant">♣</div>
+<div class="layout">
+  <aside class="chat" id="chat">
+    <header class="chat-head"><span class="paw">🐾</span><div><div class="brand">Companheiro</div><span class="small">Sempre aqui por você ♡</span></div><button id="exit">↗ Sair</button></header>
+    <div class="messages" id="messages" aria-live="polite">
+      <div class="bot-row"><div class="avatar">🐈‍⬛</div><div class="bubble">Oi! 💚 Antes de começarmos... poderia me dar um nome?</div></div>
     </div>
-    <button id="exitButton">Sair</button>
-  </div>
-
-  <div class="messages" id="messages" aria-live="polite">
-    <div class="message">
-      Oi! 💚 Estou aqui para te ouvir.
-      Como você está se sentindo hoje?
-    </div>
-  </div>
-
-  <form class="input-area" id="chatForm">
-    <input id="userInput"
-      placeholder="Pode falar comigo..."
-      maxlength="500"
-      aria-label="Sua mensagem"
-      required>
-    <button class="send" type="submit">➤</button>
-  </form>
-</aside>
-
-<main class="stage">
-  <p class="eyebrow">Seu cantinho de tranquilidade</p>
-
-  <button class="cat-button" id="cat"
-    aria-label="Fazer carinho no gato"
-    title="Clique para fazer carinho">
-
-    <svg class="cat-art" viewBox="0 0 16 16"
-      xmlns="http://www.w3.org/2000/svg"
-      shape-rendering="crispEdges"
-      role="img" aria-label="Gato preto de olhos verdes">
-
-      <!-- Silhueta pixelada -->
-      <g fill="#080b12">
-        <rect x="3" y="1" width="2" height="1"/>
-        <rect x="2" y="2" width="3" height="3"/>
-        <rect x="11" y="2" width="3" height="3"/>
-        <rect x="4" y="3" width="8" height="1"/>
-        <rect x="3" y="4" width="10" height="1"/>
-        <rect x="2" y="5" width="12" height="5"/>
-        <rect x="3" y="10" width="10" height="3"/>
-        <rect x="4" y="13" width="3" height="1"/>
-        <rect x="9" y="13" width="3" height="1"/>
-        <rect x="12" y="10" width="2" height="1"/>
-        <rect x="13" y="9" width="2" height="2"/>
-        <rect x="14" y="8" width="1" height="2"/>
-      </g>
-
-      <!-- Interior das orelhas -->
-      <g fill="#a56a96">
-        <rect x="3" y="3" width="1" height="1"/>
-        <rect x="12" y="3" width="1" height="1"/>
-      </g>
-
-      <!-- Olhos de cristal verdes -->
-      <g fill="#39ef93">
-        <rect x="4" y="6" width="3" height="2"/>
-        <rect x="9" y="6" width="3" height="2"/>
-      </g>
-      <g fill="#d2ffe7">
-        <rect x="5" y="6" width="1" height="1"/>
-        <rect x="10" y="6" width="1" height="1"/>
-      </g>
-      <g fill="#102b24">
-        <rect x="5" y="7" width="1" height="1"/>
-        <rect x="10" y="7" width="1" height="1"/>
-      </g>
-
-      <!-- Focinho -->
-      <rect x="7" y="9" width="2" height="1" fill="#b56f91"/>
-      <rect x="6" y="10" width="1" height="1" fill="#68718b"/>
-      <rect x="9" y="10" width="1" height="1" fill="#68718b"/>
-
-      <!-- Coleira verde -->
-      <rect x="4" y="11" width="8" height="1" fill="#2b9d72"/>
-      <rect x="7" y="12" width="2" height="2" fill="#72ffb3"/>
-      <rect x="7" y="12" width="1" height="1" fill="#d2ffe7"/>
-    </svg>
-  </button>
-
-  <h1>Estou aqui com você 💚</h1>
-
-  <p class="subtitle" id="subtitle">
-    Você não precisa resolver tudo de uma vez.
-    Podemos conversar um pouquinho.
-  </p>
-
-  <div class="actions">
-    <button class="heart" id="petButton">♥ Fazer carinho</button>
-    <button id="backButton" class="hidden">↶ Voltar</button>
-  </div>
-
-  <p class="footer">🐾 Você importa. Cuide de si com carinho.</p>
-</main>
-
+    <form class="composer" id="form"><input id="message" maxlength="1200" placeholder="Pode falar comigo..." aria-label="Escreva sua mensagem" required><button class="send" id="send" aria-label="Enviar">➤</button></form>
+  </aside>
+  <main class="stage">
+    <div class="poster">Você<br>importa.<br>♡</div>
+    <p class="eyebrow">✦ Seu cantinho de tranquilidade ✦</p>
+    <button class="cat-button" id="cat" aria-label="Fazer carinho no gato" title="Clique para fazer carinho">
+      <svg class="cat-svg" viewBox="0 0 300 330" role="img" aria-label="Gato preto de olhos verdes em pixel art" shape-rendering="crispEdges">
+        <g class="tail"><path d="M205 235 Q275 225 258 158 Q248 130 232 153 Q228 169 242 183 Q253 211 208 213Z" fill="#090b13" stroke="#05060c" stroke-width="8"/><path d="M238 158 Q243 149 250 164" fill="none" stroke="#29213c" stroke-width="5"/></g>
+        <g fill="#080a12" stroke="#03050a" stroke-width="5" stroke-linejoin="round">
+          <path d="M74 104 L69 25 L118 63 Q150 52 180 63 L229 24 L226 107 Q246 130 244 166 L244 237 Q237 276 204 282 L91 282 Q56 269 55 231 L55 161 Q54 128 74 104Z"/>
+          <path d="M74 46 L78 87 L104 68Z" fill="#a96b9a" stroke="none"/>
+          <path d="M218 46 L214 87 L189 68Z" fill="#a96b9a" stroke="none"/>
+          <path d="M86 231 Q63 249 79 274 L111 281 L121 253Z" stroke="none"/>
+          <path d="M171 252 L190 228 L222 249 L211 278 L179 282Z" stroke="none"/>
+        </g>
+        <g class="eyes-open">
+          <path d="M89 133 L104 112 L128 122 L132 148 L113 161 L91 151Z" fill="#43f39c" stroke="#1d9b6d" stroke-width="4"/>
+          <path d="M168 122 L190 112 L207 132 L204 151 L184 161 L166 147Z" fill="#43f39c" stroke="#1d9b6d" stroke-width="4"/>
+          <path d="M108 124 L116 124 L116 147 L108 147Z M185 124 L193 124 L193 147 L185 147Z" fill="#071b18"/>
+          <path d="M100 119 L107 119 L107 126 L100 126Z M178 119 L185 119 L185 126 L178 126Z" fill="#e2fff0"/>
+        </g>
+        <g class="eye-shut" fill="none" stroke="#8effbd" stroke-width="6"><path d="M91 143 Q110 158 130 143"/><path d="M167 143 Q187 158 206 143"/></g>
+        <path d="M140 164 L155 164 L148 172Z" fill="#c67ca8"/><path d="M148 172 L148 181 M148 181 L139 186 M148 181 L157 186" stroke="#3c314c" stroke-width="3" fill="none"/>
+        <path d="M93 173 L56 167 M92 184 L55 188 M204 173 L239 166 M205 185 L242 188" stroke="#8186a9" stroke-width="3"/>
+        <path d="M86 217 Q149 239 213 216 L207 233 Q148 252 92 233Z" fill="#1f966b" stroke="#071d1a" stroke-width="4"/>
+        <rect x="140" y="234" width="20" height="22" rx="3" fill="#8effbd"/><rect x="146" y="239" width="7" height="7" fill="#effff5"/>
+        <g fill="#182e35"><rect x="95" y="264" width="10" height="13"/><rect x="120" y="264" width="10" height="13"/><rect x="169" y="264" width="10" height="13"/><rect x="194" y="264" width="10" height="13"/></g>
+      </svg>
+    </button>
+    <p class="cat-name" id="catName">Ainda estou escolhendo meu nome ♡</p>
+    <h1>Estou aqui com você 💚</h1>
+    <p class="subtitle" id="subtitle">Você não precisa resolver tudo de uma vez.<br>Podemos conversar um pouquinho.</p>
+    <div class="actions"><button class="primary" id="pet">♥ Fazer carinho</button><button id="back" class="hidden">↶ Voltar ao chat</button></div>
+    <div class="foot">🐾 Você importa. Cuide de si com carinho. ♡</div>
+  </main>
+</div>
 <script>
-const chat = document.getElementById("chat");
-const messages = document.getElementById("messages");
-const input = document.getElementById("userInput");
-const form = document.getElementById("chatForm");
-const subtitle = document.getElementById("subtitle");
-const backButton = document.getElementById("backButton");
+const messages = document.getElementById('messages');
+const form = document.getElementById('form');
+const input = document.getElementById('message');
+const send = document.getElementById('send');
+const cat = document.getElementById('cat');
+const pet = document.getElementById('pet');
+const catName = document.getElementById('catName');
+const subtitle = document.getElementById('subtitle');
+const chat = document.getElementById('chat');
+const back = document.getElementById('back');
+let chosenName = '';
+let namingMode = true;
+let coolingDown = false;
+let history = [];
 
-document.getElementById("exitButton").onclick = () => {
-  chat.classList.add("hidden");
-  backButton.classList.remove("hidden");
-};
-
-backButton.onclick = () => {
-  chat.classList.remove("hidden");
-  backButton.classList.add("hidden");
-};
-
-function addMessage(text, type = "") {
-  const div = document.createElement("div");
-  div.className = "message " + type;
-  div.textContent = text;
-  messages.appendChild(div);
+function addBubble(text, who='bot') {
+  const row = document.createElement('div');
+  row.className = who === 'user' ? 'user-row' : 'bot-row';
+  if (who === 'bot') {
+    const avatar = document.createElement('div');
+    avatar.className = 'avatar';
+    avatar.textContent = '🐈‍⬛';
+    row.appendChild(avatar);
+  }
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble' + (who === 'user' ? ' user-bubble' : '');
+  bubble.textContent = text;
+  row.appendChild(bubble);
+  messages.appendChild(row);
   messages.scrollTop = messages.scrollHeight;
 }
-
-function getReply(text) {
-  const t = text.toLowerCase();
-
-  if (/suic[ií]d|me matar|tirar minha vida|não quero mais viver/.test(t)) {
-    return "Sinto muito que você esteja passando por algo tão difícil. Você merece apoio de verdade, agora. Se estiver em perigo imediato, procure um adulto de confiança ou um serviço de emergência e fique perto de alguém que possa ajudar. No Brasil, o SAMU atende pelo 192. Posso continuar aqui enquanto você procura apoio.";
-  }
-
-  if (/matemática|tarefa|dever|lição|cálculo/.test(t)) {
-    return "Eu sou um companheiro de conversa, então não faço tarefas escolares. 💚 Mas podemos conversar sobre como você está se sentindo.";
-  }
-
-  if (/triste|sozinh|solidão|chorando|mal/.test(t)) {
-    return "Sinto muito que esteja sendo difícil. Você não precisa fingir que está tudo bem. Quer me contar um pouquinho sobre o que está sentindo? 💚";
-  }
-
-  if (/ansios|medo|nervos|preocup/.test(t)) {
-    return "Vamos com calma, um momento de cada vez. Você não precisa resolver tudo agora. O que está te preocupando?";
-  }
-
-  if (/raiva|ódio|irritad/.test(t)) {
-    return "Você pode falar sobre o que está te incomodando sem medo de julgamento. Seus sentimentos merecem ser ouvidos.";
-  }
-
-  if (/feliz|alegre|consegui|vitória/.test(t)) {
-    return "Que bom saber disso! 💚 Suas conquistas merecem ser celebradas, inclusive as pequenas.";
-  }
-
-  return "Estou aqui para te ouvir, sem julgamentos. Não tenho todas as respostas, mas podemos tentar entender seus sentimentos juntos. 💚";
+function setBusy(busy) {
+  send.disabled = busy;
+  input.disabled = busy;
+  send.textContent = busy ? '…' : '➤';
 }
-
-form.addEventListener("submit", event => {
-  event.preventDefault();
+async function sendToAI(text) {
+  const typing = document.createElement('div');
+  typing.className = 'typing';
+  typing.textContent = `${chosenName || 'Companheiro'} está pensando…`;
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+  try {
+    const response = await fetch('/api/chat', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:text, name:chosenName, history:history.slice(-12)})
+    });
+    if (!response.ok) throw new Error('Servidor indisponível');
+    const data = await response.json();
+    typing.remove();
+    addBubble(data.reply || 'Não consegui encontrar as palavras agora. Podemos tentar de novo?', 'bot');
+    history.push({role:'user',content:text},{role:'assistant',content:data.reply || ''});
+  } catch (e) {
+    typing.remove();
+    addBubble('Ainda não consegui me conectar à minha IA. A parte visual funciona, mas para conversar de forma inteligente preciso que o servidor Java esteja ligado.', 'bot');
+  }
+}
+form.addEventListener('submit', async e => {
+  e.preventDefault();
   const text = input.value.trim();
   if (!text) return;
-
-  addMessage(text, "user");
-  input.value = "";
-  addMessage(getReply(text));
+  addBubble(text,'user');
+  input.value='';
+  if (namingMode) {
+    chosenName = text.replace(/[<>]/g,'').slice(0,30);
+    catName.textContent = `Meu nome é ${chosenName} ♡`;
+    namingMode = false;
+    addBubble(`Gostei de “${chosenName}”! 💚 Agora podemos conversar. O que está passando pela sua cabeça hoje?`);
+    subtitle.textContent = `Pode me chamar de ${chosenName}. Estou aqui para conversar com você.`;
+    return;
+  }
+  setBusy(true);
+  await sendToAI(text);
+  setBusy(false);
+  input.focus();
 });
-
-function petCat() {
-  subtitle.textContent = "Purrrr... 💚 Obrigado pelo carinho!";
-
-  try {
-    const AudioClass = window.AudioContext || window.webkitAudioContext;
-    if (!AudioClass) return;
-
-    const audio = new AudioClass();
-    const osc = audio.createOscillator();
-    const gain = audio.createGain();
-
-    osc.type = "triangle";
-    osc.frequency.value = 38;
-    gain.gain.value = 0.04;
-
-    osc.connect(gain);
-    gain.connect(audio.destination);
-    osc.start();
-
-    gain.gain.setTargetAtTime(0.001, audio.currentTime, 0.15);
-    osc.stop(audio.currentTime + 0.6);
-    osc.onended = () => audio.close();
-  } catch (error) {
-    // O carinho continua funcionando mesmo sem som.
+function showHearts() {
+  const symbols=['♥','♡','✦','♥','♡','✧'];
+  for(let i=0;i<symbols.length;i++){
+    const heart=document.createElement('span');
+    heart.className='heart-float';
+    heart.textContent=symbols[i];
+    heart.style.setProperty('--dx',`${(Math.random()-.5)*180}px`);
+    heart.style.setProperty('--rot',`${(Math.random()-.5)*45}deg`);
+    heart.style.animationDelay=`${i*70}ms`;
+    cat.appendChild(heart);
+    setTimeout(()=>heart.remove(),1500);
   }
 }
-
-document.getElementById("cat").onclick = petCat;
-document.getElementById("petButton").onclick = petCat;
+function petCat() {
+  if(coolingDown) return;
+  coolingDown=true;
+  cat.disabled=true; pet.disabled=true;
+  showHearts();
+  subtitle.textContent='Purrr... acho que gostei desse carinho! ♡';
+  setTimeout(()=>{coolingDown=false;cat.disabled=false;pet.disabled=false;subtitle.textContent=chosenName?`Pode me chamar de ${chosenName}. Estou aqui para conversar com você.`:'Você não precisa resolver tudo de uma vez. Podemos conversar um pouquinho.';},3000);
+}
+cat.addEventListener('click',petCat);
+pet.addEventListener('click',petCat);
+document.getElementById('exit').addEventListener('click',()=>{chat.classList.add('hidden');back.classList.remove('hidden');});
+back.addEventListener('click',()=>{chat.classList.remove('hidden');back.classList.add('hidden');});
 </script>
-
 </body>
 </html>
